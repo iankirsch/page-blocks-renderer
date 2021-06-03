@@ -1,0 +1,29 @@
+<!--
+  EXAMPLE HTML HEAD TAG INSERT FOR USE WITH PAGEBLOCKS
+
+  This file must exist for PageBlocks to function. If you wish not to use it,
+  please remove the content.head insert tag from your template views.
+
+  To insert variables into this file, simply add them to the content object of the page 
+  and insert them using the JavaScript Template String Notation, as seen below.
+
+  Note, that you do not need to prefix them with "content.".
+
+  © 2021 Ian Kirsch - All rights reserved. - https://iankirs.ch
+-->
+<head>
+  <!-- Meta Data -->
+  <title>${tabTitle}</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="${description}">
+  <meta name="keywords" content="${tags}">
+  <meta name="author" content="${author}">
+
+  <!-- CSS References -->
+  <link rel="stylesheet" type="text/css" href="/stylesheet.css" media="screen" />
+
+  <!-- PWA Definitions -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="${themeColor}">
+  <meta name="viewport" content="width=device-width, initial-scale=0.8">
+</head>

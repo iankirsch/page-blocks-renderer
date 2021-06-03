@@ -1,0 +1,25 @@
+{
+  "name": "page-blocks",
+  "version": "1.1.1",
+  "description": "Create web pages easily, using simple jsx builing block structures.",
+  "main": "index.js",
+  "scripts": {
+    "-start-esm": "node -r esm compiled",
+    "-start": "node compiled",
+    "-build-esm": "babel defaults -d compiled",
+    "-build": "babel defaults -d compiled --plugins @babel/plugin-transform-modules-commonjs"
+  },
+  "author": "Ian Kirsch",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/plugin-transform-modules-commonjs": "^7.12.1",
+    "@babel/plugin-transform-react-jsx": "^7.12.12",
+    "colors": "^1.4.0",
+    "esm": "^3.2.25",
+    "jsdom": "^16.4.0",
+    "node-watch": "^0.7.1",
+    "fs-extra": "^9.1.0"
+  }
+}

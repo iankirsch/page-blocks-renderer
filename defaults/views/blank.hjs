@@ -1,0 +1,31 @@
+<!--
+  EXAMPLE BLANK HOGANJS TEMPLATE FOR USE WITH PAGEBLOCKS
+
+  This is the minimum amount of necessary HTML which the PageBlocks module
+  requires to be able to insert your processed JSX files into.
+
+  © 2021 Ian Kirsch - All rights reserved. - https://iankirs.ch
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- 
+  The head is inserted from the static folder of the views directory.
+  You may wish to not use the same head on all template pages, in which  
+  case you can simply remove this tag here and write a new HTML tag here.
+ -->
+{{{content.head}}}
+
+<body>
+  <!-- This is where your jsx is inserted. -->
+  {{{pageBlock.root}}}
+
+  <!-- 
+    This is where the script tags are inserted from the static folder of the views directory.
+    You may wish to not use the same script tags on each template pages, in which  
+    case you can simply remove this tag here and write your own here.
+  -->
+  {{{content.bodyEnd}}}
+</body>
+
+</html>
