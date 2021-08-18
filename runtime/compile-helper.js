@@ -175,8 +175,8 @@
    _initGlobalVariables();
    let toBeCompiledFolder =
      !!subFolder
-       ? path.join(BLOCKS_DIRECTORY, subFolder)
-       : BLOCKS_DIRECTORY;
+       ? path.join(ROOT_DIRECTORY, BLOCKS_DIRECTORY, subFolder)
+       : path.join(ROOT_DIRECTORY, BLOCKS_DIRECTORY);
  
    fs.readdirSync(toBeCompiledFolder).forEach(file => {
      let relativePath =
