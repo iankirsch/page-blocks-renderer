@@ -1,3 +1,5 @@
 node_modules/
 compiled/
 .vscode/launch.json
+view_blocks/
+view_roots/

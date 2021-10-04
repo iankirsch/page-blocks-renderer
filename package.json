@@ -1,9 +1,10 @@
 {
   "name": "page-blocks",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Create web pages easily, using simple jsx builing block structures.",
   "main": "index.js",
   "scripts": {
+    "dev": "node .dev-env",
     "-start-esm": "node -r esm compiled",
     "-start": "node compiled",
     "-build-esm": "babel defaults -d compiled",
