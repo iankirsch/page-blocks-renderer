@@ -3,9 +3,9 @@
 */
 
 const fs = require('fs-extra');
-const path = require("path");
+const path = require('path');
 
-const { HTMLComponent, HTMLTemplateComponent } = require('./Component');
+const { HTMLTemplateComponent } = require('./Component');
 const _jsxRuntime = require('./runtime/jsx-runtime');
 
 /*
@@ -13,7 +13,6 @@ const _jsxRuntime = require('./runtime/jsx-runtime');
 */
 
 let ROOT_DIRECTORY;
-let BLOCKS_DIRECTORY;
 let VIEWS_DIRECTORY;
 let PAGE_TITLE;
 let DEFAULT_AUTHOR;
@@ -23,7 +22,6 @@ let THEME_COLOR;
 
 function _initGlobalVariables() {
   ROOT_DIRECTORY = process.env.PAGE_BLOCKS_ROOT;
-  BLOCKS_DIRECTORY = process.env.PAGE_BLOCKS_BLOCKS;
   VIEWS_DIRECTORY = process.env.PAGE_BLOCKS_VIEWS;
   PAGE_TITLE = process.env.PAGE_TITLE;
   DEFAULT_AUTHOR = process.env.DEFAULT_AUTHOR;
@@ -36,33 +34,31 @@ function _initGlobalVariables() {
   PAGE CLASSES
 */
 
+/**
+ * Page class, that facilitates all stages of the page render process.
+ *
+ * @param {string} pageRoot - Name of the root file to render into
+ * @param {string} pageBlock - Name of the block file to be rendered
+ * @param {*} req - Express Request object
+ * @param {*} res - Express Response object
+ * @param {*} config - Page configuration
+ */
 class Page {
-  /**
-   * Page class, that facilitates all stages of the page render process.
-   * 
-   * @param {*} req 
-   * @param {string} title 
-   * @param {string} description 
-   * @param {string} tags 
-   * @param {string} editDate 
-   * @param {string} author 
-   * @param {boolean} useAccount 
-   */
 
   constructor(pageRoot, pageBlock, req, res, config = {}) {
-    if (!PAGE_TITLE) _initGlobalVariables(); // Initialise global variables, if it has not yet happened.
+    if (!PAGE_TITLE) { _initGlobalVariables(); } // Initialise global variables, if it has not yet happened.
     this.req = req;
     this.res = res;
     this.pageRoot = pageRoot;
     this.pageBlock = pageBlock;
     this.config = {
-      title: config.title || "No title given",
+      title: config.title || 'No title given',
       description: config.description || DEFAULT_DESCRIPTION,
       tags: config.tags || DEFAULT_TAGS,
-      editDate: config.editDate || "",
+      editDate: config.editDate || '',
       author: config.author || DEFAULT_AUTHOR,
       themeColor: config.themeColor || THEME_COLOR
-    }
+    };
   }
 
   get account() {
@@ -73,17 +69,17 @@ class Page {
       return this.req.user;
     } else {
       return false;
-    };
+    }
   }
 
   get context() {
     /**
      * Returns the "context" object, that contains all static page parts passed over to the view.
      */
-    let tempContext = {
+    const tempContext = {
       appName: PAGE_TITLE,
       pageTitle: this.config.title,
-      tabTitle: this.config.title + " | " + PAGE_TITLE,
+      tabTitle: this.config.title + ' | ' + PAGE_TITLE,
       description: this.config.description,
       tags: this.config.tags,
       editDate: this.config.editDate,
@@ -91,14 +87,14 @@ class Page {
       themeColor: this.config.themeColor,
       account: this.account,
       version: require(path.join(ROOT_DIRECTORY, './package.json')).version
-    }
-    if (this.config.title == "PAGE_ROOT") {
-      tempContext.pageTitle = "Welcome";
+    };
+    if (this.config.title === 'PAGE_ROOT') {
+      tempContext.pageTitle = 'Welcome';
       tempContext.tabTitle = PAGE_TITLE;
     }
 
     // Load all necessary static HTML components
-    let headComponent = new HTMLTemplateComponent('head', tempContext);
+    const headComponent = new HTMLTemplateComponent('head', tempContext);
 
     // Pass components back to router to be rendered
     tempContext.head = headComponent.body;
@@ -110,31 +106,41 @@ class Page {
    * Renders the current page using the router passed to it.
    * @param {string} entry
    */
-  render(entry = 'default') {
+  render(entry = 'default', outputToString = false) {
     // Render the requested JSX Block to HTML
-    _jsxRuntime.invokeRender(this.pageBlock, entry, this.context)
-      .then((renderedJSX) => {
-        // Add any additional head children from the rendered Block to the head attribute.
-        let context = this.context;
-        context.head = context.head.replace(/<\/head>/g, renderedJSX.head + "\n</head>");
+    return new Promise((resolve, reject) => {
+      _jsxRuntime.invokeRender(this.pageBlock, entry, this.context)
+        .then((renderedJSX) => {
+          // Add any additional head children from the rendered Block to the head attribute.
+          const context = this.context;
+          context.head = context.head.replace(/<\/head>/g, renderedJSX.head + '\n</head>');
 
-        // Render the final page, including all attributes and Blocks.
-        this.res.render(
-          path.join(ROOT_DIRECTORY, VIEWS_DIRECTORY + this.pageRoot),
-          {
-            context: context,
-            pageBlock: {
-              root: renderedJSX.body
-            }
+          // Render the final page, including all attributes and Blocks.
+          if (!outputToString) {
+            this.res.render(
+              path.join(ROOT_DIRECTORY, VIEWS_DIRECTORY + this.pageRoot),
+              {
+                context: context,
+                pageBlock: {
+                  root: renderedJSX.body
+                }
+              }
+            );
+            resolve();
+          } else {
+            resolve(renderedJSX.body);
           }
-        );
-      }).catch((err) => {
-        let debug = false;
-        if (fs.existsSync(path.join(ROOT_DIRECTORY, '/config.json')))
-          debug = require(path.join(ROOT_DIRECTORY, '/config.json')).DEBUG;
+        }).catch((err) => {
+          let debug = false;
+          if (fs.existsSync(path.join(ROOT_DIRECTORY, '/config.json'))) { debug = require(path.join(ROOT_DIRECTORY, '/config.json')).DEBUG; }
 
-        this.res.render('error', { error: err, debug: debug });
-      });
+          if (!outputToString) {
+            this.res.render('error', { error: err, debug: debug });
+          } else {
+            reject(err.message);
+          }
+        });
+    });
   }
 
 }

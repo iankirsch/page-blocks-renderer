@@ -1,0 +1,100 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es2021": true,
+        "node": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 12,
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "requireConfigFile": false
+    },
+    "plugins": [
+        "@typescript-eslint",
+        "eslint-plugin-prefer-arrow"
+    ],
+    "rules": {
+        "camelcase": [
+            "warn",
+            {
+                "properties": "always",
+                "ignoreImports": true,
+                "ignoreGlobals": true
+            }
+        ],
+        "prefer-const": [
+            "warn"
+        ],
+        "eqeqeq": [
+            "warn",
+            "always"
+        ],
+        "no-empty": [
+            "warn",
+            {
+                "allowEmptyCatch": true
+            }
+        ],
+        "no-unused-vars": [
+            "off"
+        ],
+        "curly": [
+            "warn"
+        ],
+        "indent": [
+            "warn",
+            2,
+            {
+                "SwitchCase": 1
+            }
+        ],
+        "no-trailing-spaces": [
+            "warn"
+        ],
+        "linebreak-style": [
+            "warn",
+            "unix"
+        ],
+        "quotes": [
+            "warn",
+            "single"
+        ],
+        "jsx-quotes": [
+            "warn",
+            "prefer-double"
+        ],
+        "semi": [
+            "warn",
+            "always"
+        ],
+        "no-var": [
+            "warn"
+        ],
+        "prefer-arrow/prefer-arrow-functions": [
+            "warn",
+            {
+                "allowStandaloneDeclarations": true
+            }
+        ],
+        "spaced-comment": [
+            "warn",
+            "always",
+            {
+                "markers": [
+                    "/"
+                ]
+            }
+        ],
+        "@typescript-eslint/no-var-requires": [
+            "off"
+        ]
+    }
+}
