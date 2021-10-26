@@ -1,4 +1,6 @@
-.dev-env.js
+.dev-env.ts
 view_blocks/
 view_roots/
 compiled/
+.eslint.json
+.eslintignore
