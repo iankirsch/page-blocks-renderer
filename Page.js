@@ -86,7 +86,6 @@ class Page {
       author: this.config.author,
       themeColor: this.config.themeColor,
       account: this.account,
-      version: require(path.join(ROOT_DIRECTORY, './package.json')).version
     };
     if (this.config.title === 'PAGE_ROOT') {
       tempContext.pageTitle = 'Welcome';
