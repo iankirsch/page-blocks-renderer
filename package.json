@@ -4,7 +4,7 @@
   "description": "Create web pages easily, using simple jsx builing block structures.",
   "main": "index.js",
   "scripts": {
-    "dev": "node .dev-env",
+    "dev": "npx ts-node .dev-env",
     "-start-esm": "node -r esm compiled",
     "-start": "node compiled",
     "-build-esm": "babel defaults -d compiled",

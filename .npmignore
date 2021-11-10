@@ -4,3 +4,4 @@ view_roots/
 compiled/
 .eslint.json
 .eslintignore
+.eslintrc.json
