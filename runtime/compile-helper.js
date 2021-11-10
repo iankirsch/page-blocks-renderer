@@ -198,7 +198,7 @@ function compileAll() {
   const compilationFolder = path.join(__dirname, '../compiled/');
 
   if (fs.existsSync(compilationFolder))
-  {fs.rmdirSync(compilationFolder, { recursive: true });}
+  {fs.rmSync(compilationFolder, { recursive: true });}
 
   fs.mkdirSync(compilationFolder);
 
