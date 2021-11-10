@@ -3,3 +3,4 @@ compiled/
 .vscode/launch.json
 view_blocks/
 view_roots/
+*.tgz

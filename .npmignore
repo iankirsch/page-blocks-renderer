@@ -5,3 +5,5 @@ compiled/
 .eslint.json
 .eslintignore
 .eslintrc.json
+README.md
+*.tgz
